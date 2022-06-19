@@ -10,6 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         MACOS:
+          - macos-10.15
           - macos-11
           - macos-12
         PYTHON:

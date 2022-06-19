@@ -16,7 +16,24 @@ jobs:
           - "3.10.4"
           - "3.10.5"
     steps:
+      - uses: actions/checkout@v3.0.2
+        with:
+          repository: "pyca/cryptography"
+          path: "cryptography"
+          ref: "main"
+
       - uses: actions/setup-python@v4.0.0
         with:
           python-version: ${{ matrix.PYTHON }}
-      - run: "pip install -vv --no-binary :all: jinja2"
+
+      - name: Download OpenSSL
+        run: |
+          python cryptography/.github/workflows/download_openssl.py macos openssl-macos-universal2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: |
+          CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1 \
+            LDFLAGS="${HOME}/openssl-macos-universal2/lib/libcrypto.a ${HOME}/openssl-macos-universal2/lib/libssl.a" \
+            CFLAGS="-I${HOME}/openssl-macos-universal2/include -mmacosx-version-min=10.10" \
+            pip install -vv --no-binary :all: cryptography

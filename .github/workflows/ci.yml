@@ -1,0 +1,22 @@
+name: CI
+on:
+  pull_request: {}
+  push: {}
+
+jobs:
+  macos:
+    runs-on: ${{ matrix.MACOS }}
+    strategy:
+      fail-fast: false
+      matrix:
+        MACOS:
+          - macos-11
+          - macos-12
+        PYTHON:
+          - "3.10.4"
+          - "3.10.5"
+    steps:
+      - uses: actions/setup-python@v4.0.0
+        with:
+          python-version: ${{ matrix.PYTHON }}
+      - run: "pip install --no-binary :all: cryptography"

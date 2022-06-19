@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: ${{ matrix.PYTHON }}
 
+      - run: pip install requests
       - name: Download OpenSSL
         run: |
           python cryptography/.github/workflows/download_openssl.py macos openssl-macos-universal2

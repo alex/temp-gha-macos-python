@@ -37,4 +37,4 @@ jobs:
           CRYPTOGRAPHY_SUPPRESS_LINK_FLAGS=1 \
             LDFLAGS="${HOME}/openssl-macos-universal2/lib/libcrypto.a ${HOME}/openssl-macos-universal2/lib/libssl.a" \
             CFLAGS="-I${HOME}/openssl-macos-universal2/include" \
-            pip install -vv --no-binary "cryptography,cffi" cryptography
+            pip install -vv --no-binary "cryptography" cryptography
